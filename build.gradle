@@ -1,29 +1,71 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.4'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.eafit.nodo'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
+// Dependencia principal de Spring Boot para iniciar el proyecto
+    implementation 'org.springframework.boot:spring-boot-starter'
 
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // Starter para conectar y trabajar con bases de datos usando JDBC
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+
+    // Starter para implementar JPA en Spring Boot (manejo de persistencia)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Driver para conectar Spring Boot a una base de datos PostgreSQL
+    implementation 'org.postgresql:postgresql:42.7.4'
+
+    // Dependencia para pruebas unitarias en Spring Boot
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Plataforma de lanzamiento para pruebas con JUnit
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Librería para trabajar con JSON (serialización y deserialización)
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.0'
+
+    // Implementación del núcleo de Hibernate ORM para manejar entidades JPA
+    implementation 'org.hibernate.orm:hibernate-core:6.6.1.Final'
+
+    // Librería para inyección de dependencias
+    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
+
+    // Lombok para reducir el código boilerplate (e.g., getters, setters)
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    // Starter para construir aplicaciones web (incluye soporte RESTful)
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
+
+    // Librería MapStruct para generación automática de mapeos entre objetos
+    implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+
+    // Librería para leer archivos .env en Java
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+
+    // SLF4J (Simple Logging Facade for Java)
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    implementation 'ch.qos.logback:logback-classic:1.4.12'
+
+    runtimeOnly 'com.h2database:h2'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
+test {
+    useJUnitPlatform()
 }
