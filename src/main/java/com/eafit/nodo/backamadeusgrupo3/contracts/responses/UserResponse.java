@@ -12,4 +12,15 @@ public class UserResponse {
     private String name;
     private String email;
     private Date birthdate;
+    private String DNI;
+
+    @Override
+    public String toString() {
+        return "UserResponse {" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", birthdate=" + birthdate +
+                ", DNI='" + DNI + '\'' +
+                '}';
+    }
 }

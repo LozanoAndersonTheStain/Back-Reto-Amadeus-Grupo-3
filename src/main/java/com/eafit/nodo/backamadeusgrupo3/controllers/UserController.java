@@ -55,4 +55,9 @@ public class UserController {
         }
         return null;
     }
+
+    @GetMapping("/get/{id}")
+    public UserResponse getUser(@PathVariable Long id) {
+        return userMapper.mapUserToUserResponse(userService.findById(id));
+    }
 }

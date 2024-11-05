@@ -20,6 +20,19 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
+    public User authenticate(UserRequest userRequest) {
+        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(userRequest.getEmail());
+        if (userEntityOptional.isPresent()) {
+            UserEntity userEntity = userEntityOptional.get();
+            if(userEntity.getName().equals(userRequest.getName())
+            && userEntity.getBirthdate().equals(userRequest.getBirthdate())
+            && userEntity.getDNI().equals(userRequest.getDNI())) {
+                return userMapper.mapUserEntityToUser(userEntity);
+            }
+        }
+        return null;
+    }
+
     public User create(User user) {
         UserRequest userRequest = userMapper.mapUserToUserRequest(user);
         UserEntity userEntity = userMapper.mapUserRequestToUserEntity(userRequest);
@@ -33,16 +46,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public User authenticate(UserRequest userRequest) {
-        Optional<UserEntity> userEntityOptional = userRepository.findByEmail(userRequest.getEmail());
-        if (userEntityOptional.isPresent()) {
-            UserEntity userEntity = userEntityOptional.get();
-            if(userEntity.getName().equals(userRequest.getName())
-            && userEntity.getBirthdate().equals(userRequest.getBirthdate())
-            && userEntity.getDNI().equals(userRequest.getDNI())) {
-                return userMapper.mapUserEntityToUser(userEntity);
-            }
-        }
-        return null;
+    public User findById(Long id) {
+        Optional<UserEntity> userEntityOptional = userRepository.findById(id);
+        return userEntityOptional.map(userMapper::mapUserEntityToUser).orElse(null);
     }
 }

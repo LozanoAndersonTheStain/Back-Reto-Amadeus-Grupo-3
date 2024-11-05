@@ -4,6 +4,8 @@ import com.eafit.nodo.backamadeusgrupo3.contracts.request.UserRequest;
 import com.eafit.nodo.backamadeusgrupo3.contracts.responses.UserResponse;
 import com.eafit.nodo.backamadeusgrupo3.models.User;
 
+import java.util.Date;
+
 public class UserMapper {
     public User mapUserModelToUser(User model) {
         return User.builder()
@@ -13,7 +15,14 @@ public class UserMapper {
                 .DNI(model.getDNI())
                 .build();
     }
+User user = User.builder()
+        .name("Juan Pérez")
+        .email("juan.perez@example.com")
+        .birthdate(new Date())
+        .DNI("123456789")
+        .build();
 
+UserResponse userResponse = UserMapper.mapUserToUserResponse(user);
     public User mapUserToUserModel(User entity) {
         return User.builder()
                 .name(entity.getName())
@@ -23,7 +32,7 @@ public class UserMapper {
                 .build();
     }
 
-    public UserResponse mapUserToUserResponse(User model) {
+    public static UserResponse mapUserToUserResponse(User model) {
         return UserResponse.builder()
                 .name(model.getName())
                 .email(model.getEmail())
