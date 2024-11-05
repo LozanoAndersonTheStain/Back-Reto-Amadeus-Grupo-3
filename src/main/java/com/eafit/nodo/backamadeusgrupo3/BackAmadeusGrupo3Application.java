@@ -1,14 +1,20 @@
 package com.eafit.nodo.backamadeusgrupo3;
 
+import com.eafit.nodo.backamadeusgrupo3.configs.DataBaseConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
 public class BackAmadeusGrupo3Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BackAmadeusGrupo3Application.class, args);
+	@Autowired
+	private DataSource dataSource;
 
-		System.out.println("Hola Mundo");
+	public static void main(String[] args) {
+		DataBaseConfig.loadDatabaseProperties();
+		SpringApplication.run(BackAmadeusGrupo3Application.class, args);
 	}
 }
