@@ -26,11 +26,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public Long crearUser(@RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam Date birthdate, @RequestParam String DNI) {
+    public Long crearUser(@RequestParam String name, @RequestParam String email, @RequestParam Date birthdate, @RequestParam String DNI) {
         UserRequest userRequest = UserRequest.builder()
                 .name(name)
                 .email(email)
-                .password(password)
                 .birthdate(birthdate)
                 .DNI(DNI)
                 .build();
@@ -40,10 +39,10 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public UserResponse authenticate(@RequestParam String email, @RequestParam String password) {
+    public UserResponse authenticate(@RequestParam String name, @RequestParam String email) {
         UserRequest userRequest = UserRequest.builder()
+                .name(name)
                 .email(email)
-                .password(password)
                 .build();
         User user = userService.authenticate(userRequest);
         if (user != null) {
