@@ -1,5 +1,6 @@
 package com.eafit.nodo.backamadeusgrupo3.contracts.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.Date;
@@ -11,7 +12,6 @@ import java.util.Date;
 public class UserRequest {
     private String name;
     private String email;
-    private String password;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthdate;
-    private String DNI;
 }

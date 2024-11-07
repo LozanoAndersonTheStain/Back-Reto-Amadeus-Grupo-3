@@ -12,6 +12,8 @@ import java.util.List;
 public interface UserMapper {
     UserEntity mapUserRequestToUserEntity(UserRequest userRequest);
 
+    UserEntity mapUserToUserEntity(User user);
+
     User mapUserEntityToUser(UserEntity userEntity);
 
     User mapUserRequestToUser(UserRequest userRequest);

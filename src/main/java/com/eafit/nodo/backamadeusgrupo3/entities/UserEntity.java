@@ -23,12 +23,8 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
+    @Temporal(TemporalType.DATE)
     @Column(nullable = false)
     private Date birthdate;
 
-    @Column(nullable = false)
-    private String DNI;
 }

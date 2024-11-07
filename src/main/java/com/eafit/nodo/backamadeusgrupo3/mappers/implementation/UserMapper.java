@@ -12,14 +12,12 @@ public class UserMapper {
                 .name(model.getName())
                 .email(model.getEmail())
                 .birthdate(model.getBirthdate())
-                .DNI(model.getDNI())
                 .build();
     }
 User user = User.builder()
         .name("Juan Pérez")
         .email("juan.perez@example.com")
         .birthdate(new Date())
-        .DNI("123456789")
         .build();
 
 UserResponse userResponse = UserMapper.mapUserToUserResponse(user);
@@ -28,7 +26,6 @@ UserResponse userResponse = UserMapper.mapUserToUserResponse(user);
                 .name(entity.getName())
                 .email(entity.getEmail())
                 .birthdate(entity.getBirthdate())
-                .DNI(entity.getDNI())
                 .build();
     }
 
@@ -45,7 +42,6 @@ UserResponse userResponse = UserMapper.mapUserToUserResponse(user);
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())
                 .birthdate(userRequest.getBirthdate())
-                .DNI(userRequest.getDNI())
                 .build();
     }
 }

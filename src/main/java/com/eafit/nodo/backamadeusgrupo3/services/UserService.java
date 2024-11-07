@@ -25,8 +25,7 @@ public class UserService {
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
             if(userEntity.getName().equals(userRequest.getName())
-            && userEntity.getBirthdate().equals(userRequest.getBirthdate())
-            && userEntity.getDNI().equals(userRequest.getDNI())) {
+                    && userEntity.getBirthdate().equals(userRequest.getBirthdate())) {
                 return userMapper.mapUserEntityToUser(userEntity);
             }
         }
@@ -34,10 +33,9 @@ public class UserService {
     }
 
     public User create(User user) {
-        UserRequest userRequest = userMapper.mapUserToUserRequest(user);
-        UserEntity userEntity = userMapper.mapUserRequestToUserEntity(userRequest);
-        UserEntity createdUserEntity = userRepository.save(userEntity);
-        return userMapper.mapUserEntityToUser(createdUserEntity);
+        UserEntity userEntity = userMapper.mapUserToUserEntity(user);
+        UserEntity savedUserEntity = userRepository.save(userEntity);
+        return userMapper.mapUserEntityToUser(savedUserEntity);
     }
 
     public List<User> findAll() {

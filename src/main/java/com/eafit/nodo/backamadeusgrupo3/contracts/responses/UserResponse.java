@@ -12,7 +12,6 @@ public class UserResponse {
     private String name;
     private String email;
     private Date birthdate;
-    private String DNI;
 
     @Override
     public String toString() {
@@ -20,7 +19,6 @@ public class UserResponse {
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", birthdate=" + birthdate +
-                ", DNI='" + DNI + '\'' +
                 '}';
     }
 }
