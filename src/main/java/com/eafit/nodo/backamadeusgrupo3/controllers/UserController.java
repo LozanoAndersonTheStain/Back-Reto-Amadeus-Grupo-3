@@ -26,17 +26,24 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public Long crearUser(@RequestBody UserRequest userRequest) {
+    public Long crearUser(@RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestParam Date birthdate, @RequestParam String DNI) {
+        UserRequest userRequest = UserRequest.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .birthdate(birthdate)
+                .DNI(DNI)
+                .build();
         User user = userMapper.mapUserRequestToUser(userRequest);
         User createdUser = userService.create(user);
         return createdUser.getId();
     }
 
     @PostMapping("/authenticate")
-    public UserResponse authenticate(@RequestParam String name, @RequestParam String email) {
+    public UserResponse authenticate(@RequestParam String email, @RequestParam String password) {
         UserRequest userRequest = UserRequest.builder()
-                .name(name)
                 .email(email)
+                .password(password)
                 .build();
         User user = userService.authenticate(userRequest);
         if (user != null) {

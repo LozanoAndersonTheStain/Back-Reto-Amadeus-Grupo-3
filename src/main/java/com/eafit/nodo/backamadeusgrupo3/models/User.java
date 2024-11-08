@@ -14,4 +14,6 @@ public class User {
     private String name;
     private String email;
     private Date birthdate;
+    private String password;
+    private String DNI;
 }
