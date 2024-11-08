@@ -53,15 +53,15 @@ public class UserController {
         return userMapper.mapUserToUserResponse(userService.findById(id));
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public Long updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest) {
         User user = userMapper.mapUserRequestToUser(userRequest);
         User updatedUser = userService.update(id, user);
         return updatedUser != null ? updatedUser.getId() : null;
     }
 
-    @GetMapping("/delete/{id}")
-    public Long deleteUser(@RequestParam Long id) {
+    @DeleteMapping("/delete/{id}")
+    public Long deleteUser(@PathVariable Long id) {
         return userService.delete(id);
     }
 }
