@@ -25,8 +25,7 @@ public class UserService {
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(userRequest.getEmail());
         if (userEntityOptional.isPresent()) {
             UserEntity userEntity = userEntityOptional.get();
-            if(userEntity.getName().equals(userRequest.getName())
-                    && userEntity.getBirthdate().equals(userRequest.getBirthdate())) {
+            if (userEntity.getName().equals(userRequest.getName())) {
                 return userMapper.mapUserEntityToUser(userEntity);
             }
         }

@@ -8,9 +8,10 @@ import com.eafit.nodo.backamadeusgrupo3.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -32,20 +33,20 @@ public class UserController {
     }
 
     @PostMapping("/authenticate")
-    public UserResponse authenticate(@RequestParam String name, @RequestParam String email) {
+    public Map<String, Object> authenticate(@RequestParam String name, @RequestParam String email) {
+        System.out.println("Received authentication request with name: " + name + " and email: " + email);
         UserRequest userRequest = UserRequest.builder()
                 .name(name)
                 .email(email)
                 .build();
         User user = userService.authenticate(userRequest);
-        if (user != null) {
-            return UserResponse.builder()
-                    .name(user.getName())
-                    .email(user.getEmail())
-                    .birthdate(user.getBirthdate())
-                    .build();
-        }
-        return null;
+        Map<String, Object> response = new HashMap<>();
+        response.put("name", user.getName());
+        response.put("email", user.getEmail());
+        response.put("birthdate", user.getBirthdate());
+        response.put("success", true);
+        System.out.println("Sending response: " + response);
+        return response;
     }
 
     @GetMapping("/get/{id}")
