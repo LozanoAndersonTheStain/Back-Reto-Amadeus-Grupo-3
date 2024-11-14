@@ -1,5 +1,6 @@
 package com.eafit.nodo.backamadeusgrupo3.contracts.request;
 
+import com.eafit.nodo.backamadeusgrupo3.models.RoleUser;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
@@ -14,4 +15,5 @@ public class UserRequest {
     private String email;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date birthdate;
+    private RoleUser role;
 }

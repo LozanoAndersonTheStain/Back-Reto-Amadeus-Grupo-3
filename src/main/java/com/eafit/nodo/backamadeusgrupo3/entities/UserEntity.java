@@ -1,5 +1,6 @@
 package com.eafit.nodo.backamadeusgrupo3.entities;
 
+import com.eafit.nodo.backamadeusgrupo3.models.RoleUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,4 +28,7 @@ public class UserEntity {
     @Column(nullable = false)
     private Date birthdate;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RoleUser role;
 }
