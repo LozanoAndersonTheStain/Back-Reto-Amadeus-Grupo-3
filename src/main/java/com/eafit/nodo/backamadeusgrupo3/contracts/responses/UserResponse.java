@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 public class UserResponse {
+    private Long id;
     private String name;
     private String email;
     private Date birthdate;
@@ -18,6 +19,7 @@ public class UserResponse {
     @Override
     public String toString() {
         return "UserResponse {" +
+                "id=" + id +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", birthdate=" + birthdate +

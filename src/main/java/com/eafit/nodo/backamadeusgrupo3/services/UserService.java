@@ -36,6 +36,10 @@ public class UserService {
         if (user.getName() == null || user.getEmail() == null || user.getBirthdate() == null) {
             throw new InvalidUserDataException("Name, email and birthdate are required");
         }
+        Optional<UserEntity> existingUser = userRepository.findByNameAndEmail(user.getName(), user.getEmail());
+        if (existingUser.isPresent()) {
+            throw new UserAlreadyExistsException("User with name " + user.getName() + " and email " + user.getEmail() + " already exists");
+        }
         UserEntity userEntity = userMapper.mapUserToUserEntity(user);
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return userMapper.mapUserEntityToUser(savedUserEntity);

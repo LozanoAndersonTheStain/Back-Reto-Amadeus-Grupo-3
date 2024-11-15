@@ -9,4 +9,6 @@ import java.util.*;
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String email);
+
+    Optional<UserEntity> findByNameAndEmail(String name, String email);
 }
