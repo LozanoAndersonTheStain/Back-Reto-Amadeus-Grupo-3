@@ -35,7 +35,7 @@ public class UserEntity {
     private RoleUser role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<DestinoEntity> destinoInfo;
+    private List<DestinationEntity> destinoInfo;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserQuerysEntity> userQuerys;
