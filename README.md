@@ -1,12 +1,12 @@
 # Back Amadeus Grupo 3
 
-## Descripción
+## Description
 
-Este proyecto es una aplicación backend desarrollada con Spring Boot que proporciona una API REST para gestionar usuarios. La aplicación incluye funcionalidades para crear, autenticar y listar usuarios.
+This project is a backend application developed with Spring Boot that provides a REST API for managing users. The application includes functionalities to create, authenticate, and list users.
 
-## Estructura del Proyecto
+## Project Structure
 
-El proyecto está estructurado de la siguiente manera:
+The project is structured as follows:
 
 * `.env`
 * `.gitignore`
@@ -47,11 +47,11 @@ El proyecto está estructurado de la siguiente manera:
                     - `nodo/`
                         - `backamadeusgrupo3/`
 
-## Configuración
+## Configuration
 
-### ***Variables de Entorno***
+### Environment Variables
 
-Asegúrate de configurar las siguientes variables de entorno en un archivo `.env`, este mismo debe estar ubicado en la raíz del proyecto:
+Make sure to configure the following environment variables in a `.env` file located at the root of the project:
 
 ```shell
 DB_URL=jdbc:postgresql://localhost:5432/yourdatabase 
@@ -59,9 +59,9 @@ DB_USERNAME=yourusername
 DB_PASSWORD=yourpassword
 ```
 
-## Dependencias
+## Dependencies
 
-Las dependencias del proyecto están gestionadas por Gradle. Aquí están algunas de las principales dependencias utilizadas:
+The project dependencies are managed by Gradle. Here are some of the main dependencies used:
 
 - **Spring Boot Starter**
 - **Spring Boot Starter JDBC**
@@ -72,30 +72,30 @@ Las dependencias del proyecto están gestionadas por Gradle. Aquí están alguna
 - **MapStruct**
 - **Java Dotenv**
 
-## Ejecución del Proyecto
+## Running the Project
 
-### Requisitos Previos
+### Prerequisites
 
 - **Java 17**
 - **Gradle**
 
-## Construcción y Ejecución
+## Build and Run
 
-Para construir y ejecutar el proyecto, utiliza los siguientes comandos:
+To build and run the project, use the following commands:
 
 ```shell
 ./gradlew build
 ./gradlew bootRun
 ```
 
-## Endpoints de la API
+## API Endpoints
 
-### ***Crear Usuario***
+### ***Create User***
 
 - **URL:** **`/api/create`**
-- **Método:** **`POST`**
+- **Method:** **`POST`**
 
-### ***Parámetros:***
+### ***Parameters:***
 
 - `name (String)`
 - `email (String)`
@@ -103,116 +103,116 @@ Para construir y ejecutar el proyecto, utiliza los siguientes comandos:
 - `birthdate (Date)`
 - `DNI (String)`
 
-### ***Autenticar Usuario***
+### ***Authenticate User:***
 
 - **URL:** `/api/authenticate`
-- **Método:** `POST`
+- **Method:** `POST`
 
-### ***Parámetros:***
+### ***Parameters:***
 
 - `email (String)`
 - `password (String)`
 
-### ***Listar Usuarios***
+### ***List Users***
 
 - **URL:** `/api/list`
-- **Método:** `GET`
+- **Method:** `GET`
 
-## Estructura del Código
+## Code Structure
 
-## ***Configuración de la Base de Datos***
+## ***Database Configuration***
 
-- **Archivo:** `DataBaseConfig.java`
-- **Descripción:** Configura las propiedades de la base de datos utilizando variables de entorno y proporciona métodos para obtener una conexión a la base de datos.
+- **File:** `DataBaseConfig.java`
+- **Description:** Configures the database properties using environment variables and provides methods to obtain a database connection.
 
-## ***Entidades***
+## ***Entities***
 
-- **Archivo:** `UserEntity.java`
-- **Descripción:** Define la entidad UserEntity que mapea a la tabla users en la base de datos.
+- **File:** `UserEntity.java`
+- **Description:** Defines the UserEntity that maps to the users table in the database.
 
-## ***Repositorios***
+## ***Repositories***
 
-- **Archivo:** `UserRepository.java`
-- **Descripción:** Interfaz que extiende JpaRepository para realizar operaciones CRUD en la entidad UserEntity.
+- **File:** `UserRepository.java`
+- **Description:** IInterface extending JpaRepository to perform CRUD operations on the UserEntity.
 
-## ***Modelos***
+## ***Models***
 
-- **Archivo:** `User.java`
-- **Descripción:** Define el modelo User que se utiliza en la lógica de negocio.
+- **File:** `User.java`
+- **Description:** Defines the User model used in the business logic.
 
-## ***Contratos (Requests y Responses)***
+## ***Contracts (Requests and Responses)***
 
-- **Archivos:** `UserRequest.java` - `UserResponse.java`
-- **Descripción:** Define las clases UserRequest y UserResponse para manejar las solicitudes y respuestas de la API.
+- **File:** `UserRequest.java` - `UserResponse.java`
+- **Description:** Defines the UserRequest and UserResponse classes to handle API requests and responses.
 
-## ***Mapeadores***
+## ***Mappers***
 
-- **Archivos:** `interfaces/UserMapper.java` - `implementation/UserMapper.java`
-- **Descripción:** Define los métodos para mapear entre *UserEntity*, *User*, *UserRequest* y *UserResponse*.
+- **File:** `interfaces/UserMapper.java` - `implementation/UserMapper.java`
+- **Description:** Defines methods to map between UserEntity, User, UserRequest, and UserResponse.
 
-## ***Servicios***
+## ***Services***
 
-- **Archivo:** `UserService.java`
-- **Descripción:** Contiene la lógica de negocio para crear, autenticar y listar usuarios.
+- **File:** `UserService.java`
+- **Description:** Contains the business logic to create, authenticate, and list users.
 
 ## ***Controladores***
-- **Archivo:** `UserController.java`
-- **Descripción:** Define los endpoints de la API para crear, autenticar y listar usuarios.
+- **File:** `UserController.java`
+- **Description:** Defines the API endpoints to create, authenticate, and list users.
 
-## ***Pruebas***
-- **Archivo:** BackAmadeusGrupo3ApplicationTests.java
-- **Descripción:** Asegúrate de que las pruebas unitarias estén configuradas y ejecutándose correctamente.
+## ***Tests***
+- **File:** BackAmadeusGrupo3ApplicationTests.java
+- **Description:** Ensure that unit tests are configured and running correctly.
 
-## ***Documentación***
+## ***Documentation***
 
-**Archivo:** `README.md`
-* En el proyecto se encuentra una carpeta llamada **`docs`** en la cual se encuentra una documentación más detallada de los archivos, su funcionalidad y más, esta se encuentra en la carpeta **`resources`**.
+**File:** `README.md`
+* The project includes a folder named docs which contains more detailed documentation of the files, their functionality, and more. This is located in the resources folder.
 
-## **Instalación**
+## **Installation**
 
-Para instalar el proyecto, sigue estos pasos:
+To install the project, follow these steps:
 
-1. Clona el repositorio en tu máquina local: Lo puedes hacer con la ruta https o ssh.
+1. Clone the repository to your local machine: You can do this with the HTTPS or SSH URL.
 
-```shell
-git clone https://github.com/LozanoAndersonTheStain/Back-Reto-Amadeus-Grupo-3.git
-```
+    ```shell
+      git clone https://github.com/LozanoAndersonTheStain/Back-Reto-Amadeus-Grupo-3.git
+    ```
 
-2. Configura las variables de entorno en un archivo `.env`.
+2. Configure the environment variables in a `.env` file.
 
-3. Construye y ejecuta el proyecto con Gradle.
+3. Build and run the project with Gradle.
 
-```shell
-./gradlew build
-./gradlew bootRun
-```
+    ```shell
+    ./gradlew build
+    ./gradlew bootRun
+    ```
 
-4. Accede a la API REST utilizando Postman o cualquier otra herramienta de prueba de API.
+4. Access the REST API using Postman or any other API testing tool.
 
-5. ¡Listo! Ya puedes empezar a utilizar la aplicación.
+5. Done! You can now start using the application.
 
-## Contribuciones
-Las contribuciones son bienvenidas. Para contribuir, sigue estos pasos:
+## Contributions
+Contributions are welcome. To contribute, follow these steps:
 
-Haz un fork del repositorio.
-Crea una nueva rama:
+1. Fork the repository.
+2. Create a new branch:
    ```bash
    git checkout -b nombre-rama
    ```
 
-Realiza tus cambios.
-Haz un commit:
+3. Make your changes.
+4. Commit your changes:
    ```bash
    git add .
-   git commit -m "Comentario" 
+   git commit -m "Comment" 
    ```
 
-Sube tus cambios:
+5. Push your changes:
    ```bash
    git push origin nombre-rama
    ```
 
-Crea una solicitud de pull:
+6. Create a pull request: Describe your changes and submit your pull request.
    ```bash
    git pull origin master
    ```
