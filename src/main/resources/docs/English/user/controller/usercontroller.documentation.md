@@ -57,8 +57,9 @@ The `UserController` class is an API controller that handles user-related reques
 
 The `UserController` class is used to handle API requests related to users. For example, to create a new user, a POST request can be made to the `/user/create` path with the user's data in the request body. To authenticate a user, a POST request can be made to the `/user/authenticate` path with the `name` and `email` parameters. To get a user by ID, a GET request can be made to the `/user/get/{id}` path. To update a user, a PUT request can be made to the `/user/update/{id}` path with the user's new data in the request body. To delete a user, a DELETE request can be made to the `/user/delete/{id}` path.
 
-```java
+`````bash
 curl -X POST \
   http://localhost:8080/user/create \
   -H 'Content-Type: application/json' \
   -d '{"name":"Juan Pérez","email":"juan.perez@example.com","birthdate":"1990-01-01"}'
+`````

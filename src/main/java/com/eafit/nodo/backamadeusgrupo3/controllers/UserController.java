@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 
