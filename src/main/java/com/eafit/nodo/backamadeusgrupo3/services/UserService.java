@@ -2,7 +2,9 @@ package com.eafit.nodo.backamadeusgrupo3.services;
 
 import com.eafit.nodo.backamadeusgrupo3.contracts.request.UserRequest;
 import com.eafit.nodo.backamadeusgrupo3.entities.UserEntity;
-import com.eafit.nodo.backamadeusgrupo3.exeptions.*;
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.InvalidUserDataException;
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.UserAlreadyExistsException;
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.UserNotFoundException;
 import com.eafit.nodo.backamadeusgrupo3.mappers.interfaces.UserMapper;
 import com.eafit.nodo.backamadeusgrupo3.models.User;
 import com.eafit.nodo.backamadeusgrupo3.repositories.UserRepository;
@@ -15,11 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    @Autowired
-    private UserMapper userMapper;
+    public UserService(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
 
     public User authenticate(UserRequest userRequest) {
         Optional<UserEntity> userEntityOptional = userRepository.findByEmail(userRequest.getEmail());

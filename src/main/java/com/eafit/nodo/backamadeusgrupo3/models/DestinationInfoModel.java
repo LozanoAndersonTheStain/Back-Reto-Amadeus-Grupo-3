@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class DestinoInfoModel {
+public class DestinationInfoModel {
     private Long id;
     private String nombreDestino;
     private String pais;

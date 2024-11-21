@@ -2,8 +2,8 @@ package com.eafit.nodo.backamadeusgrupo3.controllers;
 
 import com.eafit.nodo.backamadeusgrupo3.contracts.request.UserRequest;
 import com.eafit.nodo.backamadeusgrupo3.contracts.responses.UserResponse;
-import com.eafit.nodo.backamadeusgrupo3.exeptions.UserAlreadyExistsException;
-import com.eafit.nodo.backamadeusgrupo3.exeptions.UserNotFoundException;
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.UserAlreadyExistsException;
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.UserNotFoundException;
 import com.eafit.nodo.backamadeusgrupo3.mappers.interfaces.UserMapper;
 import com.eafit.nodo.backamadeusgrupo3.models.User;
 import com.eafit.nodo.backamadeusgrupo3.services.UserService;

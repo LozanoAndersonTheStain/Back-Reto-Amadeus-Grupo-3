@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class DestinationResponse {
-    private String destinoA;
-    private String destinoE;
+    private String destinationA;
+    private String destinationB;
 }

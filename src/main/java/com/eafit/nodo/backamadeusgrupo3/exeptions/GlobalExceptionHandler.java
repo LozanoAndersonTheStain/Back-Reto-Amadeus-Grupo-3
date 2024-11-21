@@ -1,5 +1,7 @@
 package com.eafit.nodo.backamadeusgrupo3.exeptions;
 
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.InvalidUserDataException;
+import com.eafit.nodo.backamadeusgrupo3.exeptions.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
