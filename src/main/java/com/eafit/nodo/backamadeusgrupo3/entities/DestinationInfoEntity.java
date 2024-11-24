@@ -14,6 +14,8 @@ public class DestinationInfoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Version
+    private Long version;
     private String nombreDestino;
     private String pais;
     private String idioma;

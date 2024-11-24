@@ -10,7 +10,6 @@ public class DestinationLogic {
         boolean b1 = "30-50 años".equals(edad) && "Hotel de Lujo".equals(alojamiento) && "Deportes y Aventuras".equals(actividad);
         switch (destino) {
             case "Playa":
-                boolean b = "30-50 años".equals(edad) && "Cultura y Museos".equals(actividad) && "Hotel de Lujo".equals(alojamiento);
                 if ("Caluroso".equals(climatica)) {
                     switch (viaje) {
                         case "1-2 semanas":
@@ -20,7 +19,7 @@ public class DestinationLogic {
                             } else if ("Menos de 30 años".equals(edad) && "Relax y Bienestar".equals(actividad) && "Hotel de Lujo".equals(alojamiento)) {
                                 destinationA = "Playa del Carmen";
                                 destinationB = "Santorini";
-                            } else if (b) {
+                            } else if ("30-50 años".equals(edad) && "Cultura y Museos".equals(actividad) && "Hotel de Lujo".equals(alojamiento)) {
                                 destinationA = "Honolulu";
                                 destinationB = "Malta";
                             }
@@ -38,7 +37,7 @@ public class DestinationLogic {
                             if ("Menos de 30 años".equals(edad) && "Cultura y Museos".equals(actividad) && "Hostal o Albergue".equals(alojamiento)) {
                                 destinationA = "San Juan";
                                 destinationB = "Niza";
-                            } else if (b) {
+                            } else if (b1) {
                                 destinationA = "Río de Janeiro";
                                 destinationB = "Lisboa";
                             }

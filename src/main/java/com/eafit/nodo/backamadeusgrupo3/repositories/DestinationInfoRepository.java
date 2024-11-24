@@ -1,6 +1,9 @@
 package com.eafit.nodo.backamadeusgrupo3.repositories;
 
 import com.eafit.nodo.backamadeusgrupo3.entities.DestinationInfoEntity;
+import com.eafit.nodo.backamadeusgrupo3.models.DestinationInfoModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,7 +31,7 @@ public interface DestinationInfoRepository extends JpaRepository<DestinationInfo
     )
     List<DestinationInfoEntity> index();
 
-    List<DestinationInfoEntity> findAll();
+    Page<DestinationInfoEntity> findByContinente(String continente, Pageable pageable);
 
     @Query(
             nativeQuery = true,

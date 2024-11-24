@@ -1,17 +1,25 @@
 package com.eafit.nodo.backamadeusgrupo3.services;
 
-import com.eafit.nodo.backamadeusgrupo3.contracts.request.DestinationRequest;
+import com.eafit.nodo.backamadeusgrupo3.contracts.responses.DestinationInfoResponse;
 import com.eafit.nodo.backamadeusgrupo3.contracts.responses.DestinationResponse;
 import com.eafit.nodo.backamadeusgrupo3.entities.DestinationInfoEntity;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.destination.DestinationAlreadyExistsException;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.destination.DestinationNameIsRequired;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.destination.DestinationNotFoundException;
+import com.eafit.nodo.backamadeusgrupo3.mappers.implementation.DestinationInfoMapper;
 import com.eafit.nodo.backamadeusgrupo3.repositories.DestinationInfoRepository;
 import com.eafit.nodo.backamadeusgrupo3.utils.DestinationLogic;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,32 +34,53 @@ public class DestinationService {
     }
 
     public DestinationResponse sendDestination(String destino, String climatica, String actividad, String alojamiento, String viaje, String edad) {
-        return destinationLogic.determineDestination(destino, climatica, actividad, alojamiento, viaje, edad);
+        try {
+            return destinationLogic.determineDestination(destino, climatica, actividad, alojamiento, viaje, edad);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error determining destination", e);
+        }
     }
 
-    public List<DestinationInfoEntity> getAllDestinations() {
+    public List<DestinationInfoResponse> getAllDestinations() {
         List<DestinationInfoEntity> destinationInfoEntities = _destinationInfoRepository.findAll();
         if (destinationInfoEntities.isEmpty()) {
             throw new DestinationNotFoundException("No destinations found");
         }
-        return destinationInfoEntities;
+        return destinationInfoEntities.stream()
+                .map(DestinationInfoMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public DestinationInfoEntity getDestinationById(Long id) {
-        return _destinationInfoRepository.findById(id)
+    public Page<DestinationInfoResponse> getAllPagedDestinations(String continent, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("nombreDestino").ascending());
+        Page<DestinationInfoEntity> destinationInfoEntities = _destinationInfoRepository.findByContinente(continent, pageable);
+        if (destinationInfoEntities.isEmpty()) {
+            throw new DestinationNotFoundException("No destinations found in " + continent);
+        }
+        return destinationInfoEntities.map(DestinationInfoMapper::toResponse);
+    }
+
+    public DestinationInfoResponse getDestinationById(Long id) {
+        DestinationInfoEntity entity = _destinationInfoRepository.findById(id)
                 .orElseThrow(() -> new DestinationNotFoundException("Destination with id " + id + " not found"));
+        return DestinationInfoMapper.toResponse(entity);
     }
 
-    public DestinationInfoEntity create(DestinationInfoEntity destinationInfoEntity) {
+    public DestinationInfoResponse create(DestinationInfoEntity destinationInfoEntity) {
         if (_destinationInfoRepository.existByDestination(destinationInfoEntity.getNombreDestino())) {
             throw new DestinationAlreadyExistsException("Destination with name " + destinationInfoEntity.getNombreDestino() + " already exists");
         } else if (destinationInfoEntity.getNombreDestino() == null) {
             throw new DestinationNameIsRequired("Destination name is required");
         }
-            return _destinationInfoRepository.saveAndFlush(destinationInfoEntity);
+        DestinationInfoEntity savedEntity = _destinationInfoRepository.saveAndFlush(destinationInfoEntity);
+        return DestinationInfoMapper.toResponse(savedEntity);
     }
 
-    public List<DestinationInfoEntity> getByName(String destination1, String destination2) {
+    public List<DestinationInfoEntity> createMultiple(List<DestinationInfoEntity> destinationInfoEntities) {
+        return _destinationInfoRepository.saveAll(destinationInfoEntities);
+    }
+
+    public List<DestinationInfoResponse> getByName(String destination1, String destination2) {
         if (destination1 == null || destination2 == null) {
             throw new DestinationNotFoundException("Destination name is required");
         }
@@ -59,10 +88,10 @@ public class DestinationService {
         if (destinations.isEmpty()) {
             throw new DestinationNotFoundException("No information on destinations");
         }
-        return destinations;
+        return destinations.stream().map(DestinationInfoMapper::toResponse).collect(Collectors.toList());
     }
 
-    public DestinationInfoEntity update(Long id, DestinationInfoEntity destinationInfoEntity) {
+    public DestinationInfoResponse update(Long id, DestinationInfoEntity destinationInfoEntity) {
         if (destinationInfoEntity == null) {
             throw new DestinationNameIsRequired("Destination body is required");
         } else if (destinationInfoEntity.getNombreDestino().isEmpty() && destinationInfoEntity.getPais().isEmpty() && destinationInfoEntity.getIdioma().isEmpty() && destinationInfoEntity.getLugarImperdible().isEmpty() && destinationInfoEntity.getComidaTipica().isEmpty() && destinationInfoEntity.getImg().isEmpty() && destinationInfoEntity.getContinente().isEmpty()) {
@@ -78,13 +107,14 @@ public class DestinationService {
         existingDestination.setImg(destinationInfoEntity.getImg());
         existingDestination.setContinente(destinationInfoEntity.getContinente());
 
-        return _destinationInfoRepository.save(existingDestination);
+        DestinationInfoEntity updatedEntity = _destinationInfoRepository.save(existingDestination);
+        return DestinationInfoMapper.toResponse(updatedEntity);
     }
 
-    public DestinationInfoEntity delete(Long id) {
+    public DestinationInfoResponse delete(Long id) {
         DestinationInfoEntity existingDestination = _destinationInfoRepository.findById(id)
                 .orElseThrow(() -> new DestinationNotFoundException("Destination with id " + id + " not found"));
         _destinationInfoRepository.deleteById(id);
-        return existingDestination;
+        return DestinationInfoMapper.toResponse(existingDestination);
     }
 }
