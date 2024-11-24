@@ -8,7 +8,6 @@ import com.eafit.nodo.backamadeusgrupo3.exeptions.user.UserNotFoundException;
 import com.eafit.nodo.backamadeusgrupo3.mappers.interfaces.UserMapper;
 import com.eafit.nodo.backamadeusgrupo3.models.User;
 import com.eafit.nodo.backamadeusgrupo3.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -48,6 +47,29 @@ public class UserService {
         UserEntity savedUserEntity = userRepository.save(userEntity);
         return userMapper.mapUserEntityToUser(savedUserEntity);
     }
+
+public List<User> createMultipleUsers(List<User> users) {
+    if (users == null || users.isEmpty()) {
+        throw new InvalidUserDataException("User list cannot be null or empty");
+    }
+
+    List<UserEntity> userEntities = users.stream()
+            .map(user -> {
+                if (user.getName() == null || user.getEmail() == null || user.getBirthdate() == null) {
+                    throw new InvalidUserDataException("Name, email, and birthdate are required for all users");
+                }
+                if (userRepository.existsByEmail(user.getEmail())) {
+                    throw new UserAlreadyExistsException("User with email " + user.getEmail() + " already exists");
+                }
+                return userMapper.mapUserToUserEntity(user);
+            })
+            .collect(Collectors.toList());
+
+    List<UserEntity> savedUserEntities = userRepository.saveAll(userEntities);
+    return savedUserEntities.stream()
+            .map(userMapper::mapUserEntityToUser)
+            .collect(Collectors.toList());
+}
 
     public List<User> findAll() {
         if (userRepository.count() == 0) {

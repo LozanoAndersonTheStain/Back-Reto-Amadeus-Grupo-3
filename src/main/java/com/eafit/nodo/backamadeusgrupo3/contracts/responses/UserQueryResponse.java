@@ -1,4 +1,4 @@
-package com.eafit.nodo.backamadeusgrupo3.models;
+package com.eafit.nodo.backamadeusgrupo3.contracts.responses;
 
 import lombok.*;
 
@@ -8,9 +8,8 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class UserQuerysModel {
+public class UserQueryResponse {
     private Long id;
-    private String query;
     private String queryTime;
     private String environmentType;
     private String climateType;
@@ -18,5 +17,4 @@ public class UserQuerysModel {
     private String activityType;
     private String stayDuration;
     private String ageRange;
-    private User user;
 }

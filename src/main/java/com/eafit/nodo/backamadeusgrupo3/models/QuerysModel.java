@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class DestinoModel {
+public class QuerysModel {
     private Long id;
     private String destino;
     private String climatica;

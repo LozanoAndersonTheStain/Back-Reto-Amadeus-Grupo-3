@@ -2,6 +2,7 @@ package com.eafit.nodo.backamadeusgrupo3.mappers.implementation;
 
 import com.eafit.nodo.backamadeusgrupo3.contracts.request.UserRequest;
 import com.eafit.nodo.backamadeusgrupo3.contracts.responses.UserResponse;
+import com.eafit.nodo.backamadeusgrupo3.entities.UserEntity;
 import com.eafit.nodo.backamadeusgrupo3.models.User;
 
 import java.util.Date;
@@ -42,6 +43,29 @@ UserResponse userResponse = UserMapper.mapUserToUserResponse(user);
                 .name(userRequest.getName())
                 .email(userRequest.getEmail())
                 .birthdate(userRequest.getBirthdate())
+                .build();
+    }
+
+    public User toUser(UserEntity userEntity) {
+        if (userEntity == null) {
+            return null;
+        }
+        return User.builder()
+                .id(userEntity.getId())
+                .name(userEntity.getName())
+                .email(userEntity.getEmail())
+                .build();
+    }
+
+    public UserEntity toUserEntity(User user) {
+        if (user == null) {
+            return null;
+        }
+
+        return UserEntity.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
                 .build();
     }
 }

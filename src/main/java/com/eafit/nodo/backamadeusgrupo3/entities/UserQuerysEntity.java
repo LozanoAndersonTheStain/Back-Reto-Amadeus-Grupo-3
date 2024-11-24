@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
-
 @Entity(name = "users_querys")
 @Data
 @NoArgsConstructor
@@ -22,24 +21,28 @@ public class UserQuerysEntity {
     private Timestamp queryTime;
 
     @Column(nullable = false)
-    private String environment_type;
+    private String environmentType;
 
     @Column(nullable = false)
-    private String climate_type;
+    private String climateType;
 
     @Column(nullable = false)
-    private String accommodation_type;
+    private String accommodationType;
 
     @Column(nullable = false)
-    private String activity_type;
+    private String activityType;
 
     @Column(nullable = false)
-    private String stay_duration;
+    private String stayDuration;
 
     @Column(nullable = false)
-    private String age_range;
+    private String ageRange;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "report_id", nullable = false)
+    private ReportsEntity report;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 }

@@ -1,8 +1,9 @@
 package com.eafit.nodo.backamadeusgrupo3.entities;
 
 import jakarta.persistence.*;
-import jakarta.persistence.Id;
 import lombok.*;
+
+import java.util.List;
 
 @Entity(name = "reports")
 @Data
@@ -23,6 +24,9 @@ public class ReportsEntity {
     private String reportData;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
+
+    @OneToMany(mappedBy = "report", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserQuerysEntity> userQueries;
 }

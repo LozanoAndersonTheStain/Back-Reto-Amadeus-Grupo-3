@@ -23,4 +23,12 @@ public interface UserMapper {
     UserResponse mapUserToUserResponse(User user);
 
     List<UserResponse> mapUserModelListToUserResponseList(List<User> users);
+
+    User toUser(UserEntity userEntity);
+
+    UserEntity toUserEntity(User user);
+
+    UserResponse toUserResponse(UserEntity userEntity);
+
+    UserEntity toUserEntity(UserResponse userResponse);
 }
