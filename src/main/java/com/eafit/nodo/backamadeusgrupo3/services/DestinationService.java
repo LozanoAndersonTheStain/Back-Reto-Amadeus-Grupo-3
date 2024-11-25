@@ -34,6 +34,21 @@ public class DestinationService {
     }
 
     public DestinationResponse sendDestination(String destino, String climatica, String actividad, String alojamiento, String viaje, String edad) {
+        StringBuilder missingParams = new StringBuilder();
+
+        if (destino == null) missingParams.append("destino, ");
+        if (climatica == null) missingParams.append("climatica, ");
+        if (actividad == null) missingParams.append("actividad, ");
+        if (alojamiento == null) missingParams.append("alojamiento, ");
+        if (viaje == null) missingParams.append("viaje, ");
+        if (edad == null) missingParams.append("edad, ");
+
+        if (missingParams.length() > 0) {
+            // Remove the trailing comma and space
+            missingParams.setLength(missingParams.length() - 2);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Missing required parameters: " + missingParams.toString());
+        }
+
         try {
             return destinationLogic.determineDestination(destino, climatica, actividad, alojamiento, viaje, edad);
         } catch (Exception e) {
