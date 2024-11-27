@@ -1,7 +1,6 @@
 package com.eafit.nodo.backamadeusgrupo3.repositories;
 
 import com.eafit.nodo.backamadeusgrupo3.entities.DestinationInfoEntity;
-import com.eafit.nodo.backamadeusgrupo3.models.DestinationInfoModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DestinationInfoRepository extends JpaRepository<DestinationInfoEntity, Long> {
@@ -38,4 +38,10 @@ public interface DestinationInfoRepository extends JpaRepository<DestinationInfo
             value = "SELECT COUNT(*) > 0 FROM destino_info WHERE nombre_destino = :nombreDestino"
     )
     boolean existByDestination(String nombreDestino);
+
+    @Query(
+            nativeQuery = true,
+            value = "SELECT * FROM destino_info WHERE nombre_destino = :nombreDestino"
+    )
+    Optional<DestinationInfoEntity> findByNombreDestino(String nombreDestino);
 }

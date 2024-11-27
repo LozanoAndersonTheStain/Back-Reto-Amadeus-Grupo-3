@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -100,7 +100,7 @@ public ResponseEntity<?> createMultipleUsers(@RequestBody List<UserRequest> user
         }
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/getUserById/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) {
         log.info("Obtain: {}", id);
         try {

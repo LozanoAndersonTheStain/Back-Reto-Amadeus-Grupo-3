@@ -50,7 +50,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
     // Starter para construir aplicaciones web (incluye soporte RESTful)
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.4'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:10.1.31'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
 
     // Librería MapStruct para generación automática de mapeos entre objetos
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
@@ -62,6 +64,22 @@ dependencies {
     // SLF4J (Simple Logging Facade for Java)
     implementation 'org.slf4j:slf4j-api:2.0.7'
     implementation 'ch.qos.logback:logback-classic:1.4.12'
+
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+
+    // H2 Database
+    testImplementation 'com.h2database:h2'
+
+    //Swagger
+    // https://mvnrepository.com/artifact/io.swagger/swagger-annotations
+    implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.14'
+    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+
+    // Validaciones
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     runtimeOnly 'com.h2database:h2'
 }
