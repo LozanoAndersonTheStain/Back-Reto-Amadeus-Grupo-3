@@ -9,7 +9,7 @@ import lombok.*;
 @Data
 @Getter
 @Setter
-@Entity(name = "destino")
+@Entity(name = "Questions")
 public class DestinationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
