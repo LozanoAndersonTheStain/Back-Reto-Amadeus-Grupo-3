@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/list")
     public ResponseEntity<List<UserResponse>> listarUsers() {
-        log.info("Listando todos los usuarios");
+        log.info("Listing users");
         List<User> users = userService.findAll();
         if (users.isEmpty()) {
             return ResponseEntity.noContent().build();

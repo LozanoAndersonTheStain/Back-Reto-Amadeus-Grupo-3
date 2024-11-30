@@ -73,10 +73,7 @@ dependencies {
     testImplementation 'com.h2database:h2'
 
     //Swagger
-    // https://mvnrepository.com/artifact/io.swagger/swagger-annotations
-    implementation group: 'io.swagger', name: 'swagger-annotations', version: '1.6.14'
-    // https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui
-    implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
     // Validaciones
     implementation 'org.springframework.boot:spring-boot-starter-validation'

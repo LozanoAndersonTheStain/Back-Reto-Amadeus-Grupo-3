@@ -29,14 +29,14 @@ public class PlanController {
     private final PlanRepository planRepository;
 
     @GetMapping("/getPlansByDestination")
-    public ResponseEntity<?> getPlansByDestination(@RequestParam String destination) {
-        log.info("Retrieving plans for destination: {}", destination);
+    public ResponseEntity<?> getPlansByDestination(@RequestParam String destinationName) {
+        log.info("Retrieving plans for destination: {}", destinationName);
         try {
-            List<PlanResponse> plans = planService.getPlansByDestination(destination);
-            log.info("Plans retrieved for destination: {}", destination);
+            List<PlanResponse> plans = planService.getPlansByDestination(destinationName);
+            log.info("Plans retrieved for destination: {}", destinationName);
             return ResponseEntity.ok(plans);
         } catch (PlanDestinationNotFoundException e) {
-            log.error("No plans found for destination: {}", destination, e);
+            log.error("No plans found for destination: {}", destinationName, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             log.error("An error occurred while retrieving plans by destination", e);
