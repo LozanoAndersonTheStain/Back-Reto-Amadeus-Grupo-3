@@ -1,11 +1,13 @@
 package com.eafit.nodo.backamadeusgrupo3.services;
 
 import com.eafit.nodo.backamadeusgrupo3.contracts.request.PlanRequest;
+import com.eafit.nodo.backamadeusgrupo3.contracts.responses.DestinationInfoResponse;
 import com.eafit.nodo.backamadeusgrupo3.contracts.responses.PlanResponse;
 import com.eafit.nodo.backamadeusgrupo3.entities.DestinationInfoEntity;
 import com.eafit.nodo.backamadeusgrupo3.entities.PlanEntity;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.plan.PlanAlreadyExistsException;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.plan.PlanDestinationNotFoundException;
+import com.eafit.nodo.backamadeusgrupo3.mappers.implementation.DestinationInfoMapper;
 import com.eafit.nodo.backamadeusgrupo3.mappers.interfaces.FlightOptionMapper;
 import com.eafit.nodo.backamadeusgrupo3.mappers.interfaces.HotelOptionMapper;
 import com.eafit.nodo.backamadeusgrupo3.mappers.interfaces.PlanMapper;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,13 +33,15 @@ public class PlanService {
     private final FlightOptionMapper flightOptionMapper;
     private final HotelOptionMapper hotelOptionMapper;
     private final DestinationInfoRepository destinationInfoRepository;
+    private final EmailService emailService;
 
-    public PlanService(PlanRepository planRepository, PlanMapper planMapper, FlightOptionMapper flightOptionMapper, HotelOptionMapper hotelOptionMapper, DestinationInfoRepository destinationInfoRepository) {
+    public PlanService(PlanRepository planRepository, PlanMapper planMapper, FlightOptionMapper flightOptionMapper, HotelOptionMapper hotelOptionMapper, DestinationInfoRepository destinationInfoRepository, EmailService emailService) {
         this.planRepository = planRepository;
         this.planMapper = planMapper;
         this.flightOptionMapper = flightOptionMapper;
         this.hotelOptionMapper = hotelOptionMapper;
         this.destinationInfoRepository = destinationInfoRepository;
+        this.emailService = emailService;
     }
 
     public List<PlanResponse> getPlansByDestination(String destinationName) {
@@ -190,6 +195,56 @@ public class PlanService {
         } catch (Exception e) {
             log.error("An error occurred while deleting the plan", e);
             throw new RuntimeException("Error deleting plan", e);
+        }
+    }
+
+    public void sendDestinationInfoByEmail(String destinationName, String email, Map<String, Object> plan) {
+        try {
+            DestinationInfoEntity destination = destinationInfoRepository.findByNombreDestino(destinationName)
+                    .orElseThrow(() -> new PlanDestinationNotFoundException("Destination not found: " + destinationName));
+            DestinationInfoResponse destinationInfo = DestinationInfoMapper.toResponse(destination);
+
+            String subject = "Información del destino y plan";
+            StringBuilder text = new StringBuilder("Información del destino:\n\n" +
+                    "Nombre: " + destinationInfo.getNombreDestino() + "\n" +
+                    "País: " + destinationInfo.getPais() + "\n" +
+                    "Idioma: " + destinationInfo.getIdioma() + "\n" +
+                    "Lugar Imperdible: " + destinationInfo.getLugarImperdible() + "\n" +
+                    "Comida Típica: " + destinationInfo.getComidaTipica() + "\n" +
+                    "Continente: " + destinationInfo.getContinente() + "\n" +
+                    "Imagen: " + destinationInfo.getImg() + "\n\n" +
+                    "Plan:\n" +
+                    "Nombre: " + plan.get("name") + "\n" +
+                    "Descripción: " + plan.get("description") + "\n\n" +
+                    "Opciones de vuelo:\n");
+
+            List<Map<String, String>> flightOptions = (List<Map<String, String>>) plan.get("flightOptions");
+            for (Map<String, String> flightOption : flightOptions) {
+                text.append("  - Nombre: ").append(flightOption.get("name")).append("\n")
+                        .append("    Descripción: ").append(flightOption.get("description")).append("\n")
+                        .append("    URL de imagen: ").append(flightOption.get("imageUrl")).append("\n")
+                        .append("    URL: ").append(flightOption.get("url")).append("\n\n");
+            }
+
+            text.append("Opciones de hospedaje:\n");
+            List<Map<String, String>> hotelOptions = (List<Map<String, String>>) plan.get("hotelOptions");
+            for (Map<String, String> hotelOption : hotelOptions) {
+                text.append("  - Nombre: ").append(hotelOption.get("name")).append("\n")
+                        .append("    Descripción: ").append(hotelOption.get("description")).append("\n")
+                        .append("    URL de imagen: ").append(hotelOption.get("imageUrl")).append("\n")
+                        .append("    URL: ").append(hotelOption.get("url")).append("\n\n");
+            }
+
+            emailService.sendEmail(email, subject, text.toString());
+        } catch (PlanDestinationNotFoundException e) {
+            log.error("Destination not found: {}", destinationName, e);
+            throw e;
+        } catch (ClassCastException e) {
+            log.error("Invalid data format in plan options", e);
+            throw new IllegalArgumentException("Invalid data format in plan options", e);
+        } catch (Exception e) {
+            log.error("An error occurred while sending destination info by email", e);
+            throw new RuntimeException("Error sending destination info by email", e);
         }
     }
 }

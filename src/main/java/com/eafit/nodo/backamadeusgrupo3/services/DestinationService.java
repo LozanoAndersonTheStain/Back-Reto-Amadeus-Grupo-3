@@ -1,7 +1,6 @@
 package com.eafit.nodo.backamadeusgrupo3.services;
 
-import com.eafit.nodo.backamadeusgrupo3.contracts.responses.DestinationInfoResponse;
-import com.eafit.nodo.backamadeusgrupo3.contracts.responses.DestinationResponse;
+import com.eafit.nodo.backamadeusgrupo3.contracts.responses.*;
 import com.eafit.nodo.backamadeusgrupo3.entities.DestinationInfoEntity;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.destination.DestinationAlreadyExistsException;
 import com.eafit.nodo.backamadeusgrupo3.exeptions.destination.DestinationNameIsRequired;

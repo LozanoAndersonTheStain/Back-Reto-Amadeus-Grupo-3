@@ -17,8 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -185,6 +185,26 @@ public class PlanController {
         } catch (Exception e) {
             log.error("An error occurred while deleting the plan with id: {}", id, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/sendDestinationInfoByEmail")
+    public ResponseEntity<String> sendDestinationInfoByEmail(@RequestBody Map<String, Object> request) {
+        try {
+            String destinationName = (String) request.get("destinationName");
+            String email = (String) request.get("email");
+            Map<String, Object> plan = (Map<String, Object>) request.get("plan");
+            planService.sendDestinationInfoByEmail(destinationName, email, plan);
+            return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
+        } catch (PlanDestinationNotFoundException e) {
+            log.error("Destination not found: {}", e.getMessage());
+            return new ResponseEntity<>("Destination not found: " + e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid data format: {}", e.getMessage());
+            return new ResponseEntity<>("Invalid data format: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            log.error("An error occurred while sending destination info by email", e);
+            return new ResponseEntity<>("An error occurred while sending destination info by email", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
