@@ -36,7 +36,7 @@ public class UserService {
     }
 
     public User create(User user) {
-        if (user.getName() == null || user.getEmail() == null || user.getBirthdate() == null) {
+        if (user.getName() == null || user.getEmail() == null) {
             throw new InvalidUserDataException("Name, email and birthdate are required");
         }
         Optional<UserEntity> existingUser = userRepository.findByNameAndEmail(user.getName(), user.getEmail());
@@ -55,7 +55,7 @@ public List<User> createMultipleUsers(List<User> users) {
 
     List<UserEntity> userEntities = users.stream()
             .map(user -> {
-                if (user.getName() == null || user.getEmail() == null || user.getBirthdate() == null) {
+                if (user.getName() == null || user.getEmail() == null) {
                     throw new InvalidUserDataException("Name, email, and birthdate are required for all users");
                 }
                 if (userRepository.existsByEmail(user.getEmail())) {
@@ -92,7 +92,6 @@ public List<User> createMultipleUsers(List<User> users) {
             UserEntity userEntity = userEntityOptional.get();
             userEntity.setName(user.getName());
             userEntity.setEmail(user.getEmail());
-            userEntity.setBirthdate(user.getBirthdate());
             UserEntity updatedUserEntity = userRepository.save(userEntity);
             return userMapper.mapUserEntityToUser(updatedUserEntity);
         }

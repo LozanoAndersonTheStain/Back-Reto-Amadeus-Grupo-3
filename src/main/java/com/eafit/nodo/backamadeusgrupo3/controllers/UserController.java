@@ -82,7 +82,6 @@ public ResponseEntity<?> createMultipleUsers(@RequestBody List<UserRequest> user
             response.put("id", user.getId());
             response.put("name", user.getName());
             response.put("email", user.getEmail());
-            response.put("birthdate", user.getBirthdate());
             response.put("role", user.getRole());
             response.put("success", true);
             log.info("Sending response: {}", response);

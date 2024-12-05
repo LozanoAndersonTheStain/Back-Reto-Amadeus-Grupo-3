@@ -26,10 +26,6 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
-    private Date birthdate;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RoleUser role;
