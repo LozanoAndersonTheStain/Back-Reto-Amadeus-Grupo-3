@@ -18,7 +18,10 @@ COPY settings.gradle /app/
 RUN chmod +x gradlew
 
 # Build the application
-RUN ./gradlew build
+RUN ./gradlew build || (echo "Build failed" && exit 1)
+
+# Verify that the JAR file exists
+RUN test -f build/libs/*.jar || (echo "JAR file not found" && exit 1)
 
 # Copy the built jar file to the container
 COPY build/libs/*.jar app.jar
