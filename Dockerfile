@@ -1,33 +1,23 @@
-# Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
+# Usar una imagen base con JDK 11 y Gradle
+FROM gradle:7.3.0-jdk11 AS build
 
-# Set the working directory in the container
+# Establecer un directorio de trabajo
 WORKDIR /app
 
-# Copy the Gradle wrapper and the build.gradle file
-COPY gradlew build.gradle /app/
-COPY gradle /app/gradle
+# Copiar archivos de tu proyecto al directorio de trabajo
+COPY . /app
 
-# Copy the source code
-COPY src /app/src
+# Ejecutar Gradle para construir el proyecto
+RUN gradle clean build
 
-# Copy the settings.gradle file
-COPY settings.gradle /app/
+# Crear una nueva imagen basada en OpenJDK 11
+FROM openjdk:11-jre-slim-buster
 
-# Give execute permission to the Gradle wrapper
-RUN chmod +x gradlew
-
-# Build the application
-RUN ./gradlew build || (echo "Build failed" && exit 1)
-
-# Verify that the JAR file exists
-RUN test -f build/libs/*.jar || (echo "JAR file not found" && exit 1)
-
-# Copy the built jar file to the container
-COPY build/libs/*.jar app.jar
-
-# Expose the port the app runs on
+# Exponer el puerto que utilizará la aplicación
 EXPOSE 8080
 
-# Run the jar file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Copiar el archivo JAR construido desde la etapa anterior
+COPY --from=build /app/build/libs/back-amadeus-grupo-3-0.0.1-SNAPSHOT.jar /app/back-amadeus-grupo-3-0.0.1-SNAPSHOT.jar
+
+# Establecer el punto de entrada para ejecutar la aplicación
+ENTRYPOINT ["java", "-jar", "/app/back-amadeus-grupo-3-0.0.1-SNAPSHOT.jar"]
