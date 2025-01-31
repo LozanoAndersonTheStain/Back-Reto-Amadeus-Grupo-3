@@ -54,9 +54,23 @@ The project is structured as follows:
 Make sure to configure the following environment variables in a `.env` file located at the root of the project:
 
 ```shell
-DB_URL=jdbc:postgresql://localhost:5432/yourdatabase 
-DB_USERNAME=yourusername 
+# Database Configuration
+DB_URL=jdbc:postgresql://localhost:5432/yourdatabase
+DB_USERNAME=yourusername
 DB_PASSWORD=yourpassword
+
+# Google OAuth Configuration
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_SCOPE=https://www.googleapis.com/auth/gmail.send
+GOOGLE_AUTHORIZATION_URI=https://accounts.google.com/o/oauth2/auth
+GOOGLE_TOKEN_URI=https://oauth2.googleapis.com/token
+GOOGLE_USER_INFO_URI=https://www.googleapis.com/oauth2/v3/userinfo
+GOOGLE_USER_NAME_ATTRIBUTE=sub
+
+# Email Configuration
+MAIL_USERNAME=your_email@example.com
+APP_PASSWORD=your_app_password
 ```
 
 ## Dependencies
